@@ -80,7 +80,7 @@ public class UrlMappingService {
 
     public Map<LocalDate, Long> getTotalClicksByUserAndDate(User user, LocalDate start, LocalDate end) {
         List<Mapping> urlMappings = urlRepository.findByUser(user);
-        List<ClickEvent> clickEvents = clickEventRepository.findByMappingInClickDateBetween(urlMappings, start.atStartOfDay(), end.plusDays(1).atStartOfDay());
+        List<ClickEvent> clickEvents = clickEventRepository.findByMappingInAndClickDateBetween(urlMappings, start.atStartOfDay(), end.plusDays(1).atStartOfDay());
         return clickEvents.stream()
                 .collect(Collectors.groupingBy(click -> click.getClickDate().toLocalDate(), Collectors.counting()));
     }

@@ -13,6 +13,6 @@ import java.util.Optional;
 @Repository
 public interface ClickEventRepository extends JpaRepository<ClickEvent, Long> {
     List<ClickEvent> findByMappingAndClickDateBetween(Mapping mapping, LocalDateTime startDate, LocalDateTime endDate);
-    List<ClickEvent> findByMappingInClickDateBetween(List<Mapping> mapping, LocalDateTime startDate, LocalDateTime endDate);
+    List<ClickEvent> findByMappingInAndClickDateBetween(List<Mapping> mapping, LocalDateTime startDate, LocalDateTime endDate);
 
 }
