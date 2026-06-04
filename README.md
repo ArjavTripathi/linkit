@@ -20,10 +20,11 @@ Linkly is a full-stack URL shortener with user authentication, link analytics, a
 ## Features
 
 - User registration and login with JWT session management
-- Secure link creation with unique short codes
-- Redirect handling from short URL to original destination
-- Per-link analytics (click tracking)
-- Spring Security configuration with protected routes
+- Secure short URL creation with unique short codes
+- HTTP 302 redirect handling from short URL to original destination
+- Per-link click analytics with date range filtering
+- Aggregate click analytics across all links for a user
+- Spring Security with role-based route protection (`ROLE_USER`)
 - PostgreSQL persistence via Spring Data JPA
 
 ---
@@ -32,23 +33,36 @@ Linkly is a full-stack URL shortener with user authentication, link analytics, a
 
 Standard layered Spring Boot architecture:
 
-- **Controller Layer** — REST endpoints for auth, link management, and redirects
-- **Service Layer** — business logic for URL generation, auth, and analytics
-- **Repository Layer** — JPA repositories for users and links
+- **Controller Layer** — REST endpoints for auth, URL management, and redirects
+- **Service Layer** — business logic for URL generation, authentication, and analytics
+- **Repository Layer** — JPA repositories for users and URL mappings
 - **Security Config** — JWT filter chain with stateless session management
 
 ---
 
-## API Overview
+## API Reference
 
-| Endpoint | Method | Description |
-|---|---|---|
-| `/api/auth/register` | POST | Register a new user |
-| `/api/auth/login` | POST | Login and receive JWT |
-| `/api/links` | POST | Create a new short link |
-| `/api/links` | GET | Get all links for authenticated user |
-| `/api/links/{id}/analytics` | GET | Get click analytics for a link |
-| `/{shortCode}` | GET | Redirect to original URL |
+### Auth — `/api/auth`
+
+| Method | Endpoint | Auth | Description |
+|---|---|---|---|
+| POST | `/api/auth/public/register` | None | Register a new user |
+| POST | `/api/auth/public/login` | None | Login and receive JWT |
+
+### URL Management — `/api/urls`
+
+| Method | Endpoint | Auth | Description |
+|---|---|---|---|
+| POST | `/api/urls/shorten` | `ROLE_USER` | Create a new short URL |
+| GET | `/api/urls/myurls` | `ROLE_USER` | Get all short URLs for the authenticated user |
+| GET | `/api/urls/analytics/{shorturl}` | `ROLE_USER` | Get click events for a specific URL by date range |
+| GET | `/api/urls/totalClicks` | `ROLE_USER` | Get total clicks across all user links by date range |
+
+### Redirect
+
+| Method | Endpoint | Auth | Description |
+|---|---|---|---|
+| GET | `/{shorturl}` | None | Redirect to original URL (HTTP 302) |
 
 ---
 
