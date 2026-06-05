@@ -2,7 +2,7 @@
 
 Linkit is a full-stack URL shortener with user authentication, link analytics, and JWT-based session management. This repository contains the Spring Boot backend.
 
-**Frontend repo:** [Linkly-frontend](https://github.com/ArjavTripathi/Linkly-frontend)
+**Frontend repo:** [Linkit-frontend](https://github.com/ArjavTripathi/Linkit-frontend)
 
 ---
 
