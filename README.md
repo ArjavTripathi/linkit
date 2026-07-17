@@ -71,8 +71,8 @@ Standard layered Spring Boot architecture:
 **Prerequisites:** Java 17+, PostgreSQL, Maven
 
 ```bash
-git clone https://github.com/ArjavTripathi/linkly
-cd linkly
+git clone https://github.com/ArjavTripathi/linkit
+cd linkit
 ```
 
 Configure your database and JWT secret in `src/main/resources/application.properties`:
